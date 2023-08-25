@@ -1,0 +1,30 @@
+@import './base.css';
+@import './variables.css';
+@import 'bootstrap/dist/css/bootstrap.css';
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,200;10..48,400;10..48,700&display=swap');
+
+body {
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: var(--main-txt-color);
+}
+
+a:hover {
+  border-bottom: 2px var(--main-txt-color) solid;
+}
+
+header {
+  margin-bottom: 8vh;
+  @media (max-width: 768px) {
+    margin-bottom: 4vh;
+  }
+}
+
+main {
+    margin-bottom: 12vh;
+}
+

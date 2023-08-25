@@ -1,0 +1,28 @@
+# Logs
+backend/logs
+frontend/tontoitvege/logs
+backend/*.log
+frontend/tontoitvege/*.log
+backend/npm-debug.log*
+frontend/tontoitvege/npm-debug.log*
+
+backend/node_modules
+frontend/tontoitvege/node_modules
+backend/config/config.env
+backend/.DS_Store
+frontend/tontoitvege/.DS_Store
+backend/dist
+frontend/tontoitvege/dist
+backend/dist-ssr
+frontend/tontoitvege/dist-ssr
+backend/coverage
+frontend/tontoitvege/coverage
+backend/*.local
+frontend/tontoitvege/*.local
+
+
+# Editor directories and files
+frontend/tontoitvege/.vscode/*
+backend.vscode/*
+backend/!.vscode/extensions.json
+frontend/tontoitvege/!.vscode/extensions.json
