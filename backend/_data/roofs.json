@@ -4,7 +4,7 @@
         "user": "bradcooper@gmail.com",
         "name": "Le toit du paradis",
         "description": "Sur le toit du paradis, vous pourrez faire pousser des courgettes et installer des ruches d'abeilles sauvages pour polleniser vos cultures et servir de cadre pédagogique aux enfants",
-        "available": "Moins de 3 mois",
+        "available": "Dans 1 à 3 mois",
         "type": "Ecole",
         "owner": "Collectivité",
         "area": "De 50 à 100m²",
@@ -49,7 +49,6 @@
         "area": "De 10 à 50m²",
         "exposition": "Est",
         "photos": ["roof.jpg"],
-        "address": "100 rue de l'école 59800 Lille",
-        "createdAt": "12/10/2023"
+        "address": "100 rue de l'école 59800 Lille"
     }
 ]

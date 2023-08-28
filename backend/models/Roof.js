@@ -67,7 +67,7 @@ const RoofSchema = new mongoose.Schema({
             'Ouest'
         ]
     },
-    photo: {
+    photos: {
         type: [String],
         required: true
     },
@@ -80,11 +80,11 @@ const RoofSchema = new mongoose.Schema({
         type: {
             type: String, 
             enum: ['Point'],
-            required: true
+            // required: true
         },
         coordinates: {
             type: [Number],
-            required: true,
+            // required: true,
             index: '2dsphere'
         },
         formattedAddress: String,
