@@ -1,6 +1,7 @@
+const asyncHandler = require('../middleware/async');
+const ErrorResponse = require('../utils/errorResponse');
+const geocoder = require('../utils/geocoder');
 const Roof = require('../models/Roof');
-const asyncHandler = require('../middleware/async')
-const ErrorResponse = require('../utils/errorResponse')
 
 //@desc     Get all roofs
 //@route    GET /api/v1/roofs
@@ -59,8 +60,35 @@ exports.updateRoof = asyncHandler(async (req, res, next) => {
         res.status(200).json({success: true, data: roof});
 });
 
+//@desc     Get roof within a radius
+//@route    GET /api/v1/roofs/radius/:zipcode/:distance
+//@access   Public
+
+exports.getRoofsInRadiusRoof = asyncHandler(async (req, res, next) => {
+    const { zipcode, distance } = req.params;
+
+    //Get lat/lng from geocoder
+    const loc = await geocoder.geocode(zipcode);
+    const lat = loc[0].latitude;
+    const lng = loc[0].longitude;
+
+    // Calc radius using radians
+    // Divide dist by radius of Earth
+    // Earth radius = 6,378 km
+    const radius = distance / 6378;
+
+    const roofs = await Roof.find({
+        location: { $geoWithin: { $centerSphere: [ [lng, lat], radius] } }
+    });
+    res.status(200).json({
+        success: true,
+        count: roofs.length,
+        data: roofs
+    })
+});
+
 //@desc     Delete a roof
-//@route    GET /api/v1/roofs/:id
+//@route    DELETE /api/v1/roofs/:id
 //@access   Private
 
 exports.deleteRoof = asyncHandler(async (req, res, next) => {

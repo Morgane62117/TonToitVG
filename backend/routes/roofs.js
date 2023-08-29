@@ -3,16 +3,19 @@ const { getRoof,
         getRoofs, 
         createRoof, 
         updateRoof, 
-        deleteRoof} = require('../controllers/roofs');
+        deleteRoof,
+        getRoofsInRadiusRoof} = require('../controllers/roofs');
 
 const router= express.Router();
+
+router.route('/radius/:zipcode/:distance').get(getRoofsInRadiusRoof)
 
 router
     .route('/')
     .get(getRoofs)
     .post(createRoof);
 
-    router
+router
     .route('/:id')
     .get(getRoof)
     .put(updateRoof)
