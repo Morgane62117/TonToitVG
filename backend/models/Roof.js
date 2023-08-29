@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
+const geocoder = require('../utils/geocoder');
 
 const RoofSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Please add a name'],
-        unique: false,
         trim: true,
         maxlength: [100, 'Name can not be more than 100 characters']
     },
@@ -80,24 +80,38 @@ const RoofSchema = new mongoose.Schema({
         type: {
             type: String, 
             enum: ['Point'],
-            // required: true
         },
         coordinates: {
             type: [Number],
-            // required: true,
             index: '2dsphere'
         },
         formattedAddress: String,
         street: String,
         city: String,
-        state: String,
         zipCode: String,
-        country: String
+        state: String
     },
     createdAt: {
         type: Date,
         default: Date.now
     }
 });
+
+//Geocode & create location field
+RoofSchema.pre('save', async function(next) {
+        const loc = await geocoder.geocode(this.address);
+        console.log(loc);
+        this.location = {
+            type: 'Point',
+            coordinates: [loc[0].longitude, loc[0].latitude],
+            formattedAddress: loc[0].formattedAddress,
+            street: loc[0].streetName,
+            city: loc[0].city,
+            zipCode: loc[0].zipcode
+        }
+        //Do not save address in DB
+        this.address = undefined;
+        next();
+})
 
 module.exports = mongoose.model('Roof', RoofSchema);

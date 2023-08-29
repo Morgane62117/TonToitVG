@@ -1,7 +1,5 @@
 [
     {
-        "_id": "1",
-        "user": "bradcooper@gmail.com",
         "name": "Le toit du paradis",
         "description": "Sur le toit du paradis, vous pourrez faire pousser des courgettes et installer des ruches d'abeilles sauvages pour polleniser vos cultures et servir de cadre pédagogique aux enfants",
         "available": "Dans 1 à 3 mois",
@@ -13,8 +11,6 @@
         "address": "3 rue de l'école 59800 Lille"
     },
     {
-        "_id": "2",
-        "user": "georgiaride@gmail.com",
         "name": "Toit d'immeuble",
         "description": "Toit de grande surface sur bâtiment neuf sur lequel le propriétaire souhaite aménager des jardins collectifs pour les habitants",
         "available": "Immédiatement",
@@ -26,21 +22,17 @@
         "address": "20 rue de l'école 59800 Lille"
     },
     {
-        "_id": "3",
-        "user": "storagecompany@gmail.com",
         "name": "Toit d'entrepôt",
         "description": "Immense toit aménageable mis à disposition par The Storage company s'inscrivant dans la stratégie de développement de RSE et de réduction de l'impact carbone",
-        "available": "Au delà de 3 mois",
+        "available": "Au-delà de 3 mois",
         "type": "Entrepôt",
         "owner": "Entreprise",
         "area": "Plus de 500m²",
         "exposition": "Nord",
         "photos": ["roof.jpg"],
-        "address": "100 rue de l'école 59800 Lille"
+        "address": "220 Pawtucket St, Lowell, MA 01854"
     },
     {
-        "_id": "4",
-        "user": "parkinglocation@gmail.com",
         "name": "Toit de parking",
         "description": "Petit toit situé au dessus d'un parking. Le propriétaire souhaite mettre à profit l'espace restant pour apporter un peu de verdure au lieu.",
         "available": "Immédiatement",
@@ -49,6 +41,6 @@
         "area": "De 10 à 50m²",
         "exposition": "Est",
         "photos": ["roof.jpg"],
-        "address": "100 rue de l'école 59800 Lille"
+        "address": "16 place du Maréchal Leclerc, 59800, Lille"
     }
 ]
