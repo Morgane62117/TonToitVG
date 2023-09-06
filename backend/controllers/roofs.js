@@ -147,5 +147,31 @@ exports.deleteRoof = asyncHandler(async (req, res, next) => {
                 new ErrorResponse(`Roof not found with id of ${req.params.id}, 404`)
             );
         }  
+
         res.status(200).json({success: true, data: {}});
+});
+
+//@desc     Upload photo for a roof
+//@route    PUT /api/v1/roofs/:id/photo
+//@access   Private
+
+exports.roofPhotoUpload = asyncHandler(async (req, res, next) => {
+    const roof = await Roof.findById(req.params.id);
+
+    if(!roof) {
+        return next(
+            new ErrorResponse(`Roof not found with id of ${req.params.id}, 404`)
+        );
+    }  
+
+    if(!req.files) {
+        return next(new ErrorResponse(`Please upload a file`, 400));
+    }
+
+    const file = req.files.file;
+
+    //Make sure that the image is a photo
+    if(!file.mimetype.startsWith('image')) {
+        return next(new ErrorResponse(`Please upload an image file`, 400));
+    }
 });
