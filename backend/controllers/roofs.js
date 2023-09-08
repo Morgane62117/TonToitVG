@@ -3,7 +3,6 @@ const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 const geocoder = require('../utils/geocoder');
 const Roof = require('../models/Roof');
-const advancedResults = require('../middleware/advancedResults');
 
 //@desc     Get all roofs
 //@route    GET /api/v1/roofs

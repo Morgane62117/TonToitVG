@@ -14,6 +14,7 @@ connectDB();
 
 //Route files
 const roofs = require('./routes/roofs');
+const auth = require('./routes/auth');
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Mount routers
 app.use('/api/v1/roofs', roofs);
+app.use('/api/v1/auth', auth);
 
 app.use(errorHandler);
 

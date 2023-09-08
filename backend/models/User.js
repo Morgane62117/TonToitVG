@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const RoofSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, 'Please add an email'],
@@ -22,5 +22,23 @@ const RoofSchema = new mongoose.Schema({
         trim: true,
         maxlength: [50, 'Name can not be more than 50 characters']
     },
-    associatedRoof: []
-})
+    role:{
+        type: String,
+        enum: ['user', 'publisher'],
+        default: 'user'
+    },
+    password: {
+        type: String,
+        required: [true, 'Please add a password'],
+        minlength: 6,
+        select: false
+    },
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+module.exports = mongoose.model('User', UserSchema);
