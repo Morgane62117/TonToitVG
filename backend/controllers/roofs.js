@@ -1,66 +1,16 @@
+const path = require('path');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 const geocoder = require('../utils/geocoder');
 const Roof = require('../models/Roof');
+const advancedResults = require('../middleware/advancedResults');
 
 //@desc     Get all roofs
 //@route    GET /api/v1/roofs
 //@access   Public
 
 exports.getRoofs = asyncHandler(async (req, res, next) => {
-        let query;
-
-        //Copy req.query
-        const reqQuery = {...req.query};
-
-        //Fields to exclude
-        const removeFields = ['page', 'limit'];
-
-        //Loop over removeFields and delete them from reqQuery
-        removeFields.forEach(param => delete reqQuery[param]);
-
-        //Create query string
-        let queryStr = JSON.stringify(reqQuery);
-        
-        //Filter in existing array for select fields
-        queryStr = queryStr.replace(/\b(in)\b/g, match => `$${match}`);
-        console.log(queryStr);
-
-        query = Roof.find(JSON.parse(queryStr));
-
-        //Sorted by last roof added
-        query = query.sort('-createdAt');
-
-        //Pagination
-        const page = parseInt(req.query.page, 10) || 1;
-        const limit = parseInt(req.query.limit, 10) || 10;
-        const startIndex = (page - 1) * limit;
-        const endIndex = page * limit;
-        const total = await Roof.countDocuments();
-
-        query = query.skip(startIndex).limit(limit);
-
-        //Executing query
-        const roofs = await query;
-
-        //Pagination result
-        const pagination = {};
-
-        if(endIndex < total) {
-            pagination.next = {
-                page: page + 1,
-                limit
-            }
-        }
-
-        if(startIndex > 0)
-        pagination.prev = {
-            page: page - 1,
-            limit
-        }
-        res
-        .status(200)
-        .json({success:true, count: roofs.length, pagination, data: roofs });
+    res.status(200).json(res.advancedResults);
 });
 
 //@desc     Get single roof
@@ -174,4 +124,25 @@ exports.roofPhotoUpload = asyncHandler(async (req, res, next) => {
     if(!file.mimetype.startsWith('image')) {
         return next(new ErrorResponse(`Please upload an image file`, 400));
     }
+
+    //Check file size
+    if(file.size > process.env.MAX_FILE_UPLOAD) {
+        return next(new ErrorResponse(`Please upload an image less than ${process.env.MAX_FILE_UPLOAD}`, 400));
+    }
+
+    //Create custom file name
+    file.name = `photo_${roof._id}${path.parse(file.name).ext}`;
+
+    file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async err => {
+        if(err) {
+            console.error(err);
+            return next(new ErrorResponse(`Problem with file upload`, 500));
+        }
+        await Roof.findByIdAndUpdate(req.params.id, {photos: file.name});
+        res.status(200).json({
+            success: true,
+            data: file.name
+        })
+    });
+    console.log(file.name);
 });

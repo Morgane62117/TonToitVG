@@ -8,6 +8,10 @@ const { getRoof,
         roofPhotoUpload
     } = require('../controllers/roofs');
 
+const Roof = require('../models/Roof');
+
+const advancedResults = require('../middleware/advancedResults');
+
 const router= express.Router();
 
 router.route('/radius/:zipcode/:distance').get(getRoofsInRadiusRoof);
@@ -16,7 +20,7 @@ router.route('/:id/photo').put(roofPhotoUpload);
 
 router
     .route('/')
-    .get(getRoofs)
+    .get(advancedResults(Roof), getRoofs)
     .post(createRoof);
 
 router
